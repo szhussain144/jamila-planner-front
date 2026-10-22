@@ -1,0 +1,187 @@
+@import "tailwindcss";
+
+/* Same design language as Salonifix: warm off-white ground, ink #202235, purple #7429C3,
+   navy top bar. Buttons are full pills, cards 18px, inputs 12px. */
+@theme {
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Space Grotesk", "Inter", ui-sans-serif, system-ui, sans-serif;
+
+  --color-bg: #fcfaf6;
+  --color-panel: #fffefc;
+  --color-panel-alt: #f3f0e9;
+  --color-card: #fffefc;
+  --color-border: #e2dfe9;
+  --color-border-soft: #ece9f0;
+
+  --color-accent: #7429c3;
+  --color-accent-dark: #5118a5;
+  --color-accent-ink: #fffefc;
+  --color-accent-soft: #efe6fb;
+
+  --color-ink: #202235;
+  --color-ink-2: #3f4256;
+  --color-muted: #586571;
+  --color-faint: #6e7683;
+
+  --color-green: #2f7d5b;
+  --color-red: #c9302f;
+  --color-blue: #47769d;
+  --color-orange: #a86a12;
+
+  --color-navy: #18324a;
+  --color-navy-ink: #fcfaf6;
+  --color-navy-ink-2: #d3d8e6;
+  --color-navy-accent: #d9b8ff;
+
+  --color-g-violet: #b48af7;
+  --color-g-orchid: #de9bdb;
+  --color-g-mist: #e9e0fa;
+
+  --radius-card: 18px;
+  --radius-input: 12px;
+}
+
+:root {
+  --banner: linear-gradient(105deg, #18324a 0%, #5118a5 52%, #a855f7 100%);
+  --shadow-card: 0 1px 2px rgba(32, 34, 53, 0.04), 0 8px 24px -12px rgba(32, 34, 53, 0.12);
+  --ease: cubic-bezier(0.22, 1, 0.36, 1);
+  color-scheme: light;
+}
+
+html, body, #root { min-height: 100%; }
+body {
+  margin: 0;
+  background: var(--color-bg);
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+}
+h1, h2 { font-family: var(--font-display); letter-spacing: -0.02em; }
+::selection { background: color-mix(in srgb, var(--color-accent) 22%, transparent); }
+:focus-visible { outline: 2px solid var(--color-accent); outline-offset: 2px; }
+::-webkit-scrollbar { width: 8px; height: 8px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: #d9d4e2; border-radius: 8px; }
+.scrollbar-none::-webkit-scrollbar { display: none; }
+.scrollbar-none { scrollbar-width: none; }
+
+/* Soft violet/orchid wash behind page headers. */
+.wash { position: relative; isolation: isolate; }
+.wash::before {
+  content: "";
+  position: absolute;
+  inset: 0 0 auto;
+  height: 340px;
+  z-index: -1;
+  pointer-events: none;
+  background:
+    radial-gradient(38% 60% at 10% 0%, color-mix(in srgb, var(--color-g-violet) 45%, transparent), transparent 70%),
+    radial-gradient(30% 55% at 55% 0%, color-mix(in srgb, var(--color-g-orchid) 35%, transparent), transparent 70%),
+    radial-gradient(34% 60% at 95% 5%, color-mix(in srgb, var(--color-g-mist) 90%, transparent), transparent 70%);
+  filter: blur(24px);
+  mask-image: linear-gradient(to bottom, #000 30%, transparent);
+  animation: wash-drift 18s ease-in-out infinite;
+}
+
+/* Navy-to-violet band for hero cards. */
+.banner {
+  background: var(--banner);
+  background-size: 180% 180%;
+  color: var(--color-accent-ink);
+  animation: banner-drift 16s ease-in-out infinite;
+}
+
+/* ---------- FullCalendar ---------- */
+.fc {
+  font-family: var(--font-sans);
+  color: var(--color-ink);
+  --fc-border-color: var(--color-border-soft);
+  --fc-today-bg-color: color-mix(in srgb, var(--color-accent) 6%, transparent);
+  --fc-neutral-bg-color: var(--color-panel-alt);
+  --fc-page-bg-color: var(--color-panel);
+  --fc-non-business-color: color-mix(in srgb, var(--color-panel-alt) 70%, transparent);
+  font-size: 12.5px;
+}
+.fc .fc-toolbar { flex-wrap: wrap; gap: 10px; }
+.fc .fc-toolbar-title { font-family: var(--font-display); font-size: 18px; font-weight: 500; letter-spacing: -0.02em; }
+.fc .fc-button {
+  border: 1px solid var(--color-border) !important;
+  background: var(--color-panel) !important;
+  color: var(--color-ink-2) !important;
+  box-shadow: none !important;
+  border-radius: 999px !important;
+  padding: 6px 14px;
+  font-size: 12.5px;
+  font-weight: 500;
+  text-transform: capitalize;
+  margin-left: 4px !important;
+}
+.fc .fc-button:hover { color: var(--color-ink) !important; border-color: color-mix(in srgb, var(--color-accent) 50%, transparent) !important; }
+.fc .fc-button-active { background: var(--color-accent) !important; border-color: var(--color-accent) !important; color: #fff !important; }
+.fc .fc-button:disabled { opacity: .5; }
+.fc .fc-col-header-cell { font-weight: 600; font-size: 12px; background: var(--color-panel-alt); color: var(--color-ink-2); }
+.fc .fc-col-header-cell-cushion { padding: 8px 4px; }
+.fc .fc-timegrid-slot { height: 2.6em; }
+.fc .fc-timegrid-slot-label, .fc .fc-daygrid-day-number { color: var(--color-muted); font-size: 11.5px; }
+.fc .fc-daygrid-day.fc-day-today .fc-daygrid-day-number {
+  background: var(--color-accent); color: #fff; border-radius: 999px; min-width: 24px; text-align: center; margin: 4px; padding: 2px 6px;
+}
+.fc .fc-scrollgrid { border-radius: 14px; overflow: hidden; }
+.fc .fc-timegrid-now-indicator-line { border-color: var(--color-red); border-width: 2px 0 0; }
+.fc .fc-timegrid-now-indicator-arrow { border-color: var(--color-red); border-top-color: transparent; border-bottom-color: transparent; }
+.fc .fc-highlight { background: color-mix(in srgb, var(--color-accent) 12%, transparent); }
+/* Session chips draw their own fill (see CalendarPage). */
+.fc .fc-event.ts-event { background: transparent; border: none; padding: 0; box-shadow: none; cursor: pointer; transition: transform .2s; }
+.fc .fc-event.ts-event:hover { transform: translateY(-1px); }
+.fc .fc-event.ts-event .fc-event-main { padding: 0; height: 100%; }
+.fc .fc-timegrid-event-harness-inset .fc-timegrid-event.ts-event { box-shadow: 0 0 0 2px var(--color-panel); border-radius: 8px; }
+.fc .fc-daygrid-block-event.ts-event { margin: 1px 4px 2px; }
+.fc .fc-event.ts-busy { cursor: pointer; }
+.busy-hatch { background: repeating-linear-gradient(135deg, #e8e4ee 0 6px, #f3f0f6 6px 12px); }
+
+/* ---------- motion ---------- */
+@keyframes rise { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
+@keyframes fade-in { from { opacity: 0; } to { opacity: 1; } }
+@keyframes pop-in { from { opacity: 0; transform: translateY(10px) scale(.97); } to { opacity: 1; transform: none; } }
+@keyframes menu-in { from { opacity: 0; transform: translateY(-6px) scale(.98); } to { opacity: 1; transform: none; } }
+@keyframes toast-in { from { opacity: 0; transform: translateX(28px) scale(.96); } to { opacity: 1; transform: none; } }
+@keyframes toast-timer { from { transform: scaleX(1); } to { transform: scaleX(0); } }
+@keyframes sheen { from { transform: translateX(-130%) skewX(-20deg); } to { transform: translateX(330%) skewX(-20deg); } }
+@keyframes banner-drift { 0%, 100% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } }
+@keyframes wash-drift { 0%, 100% { transform: translate3d(0,0,0) scale(1); } 50% { transform: translate3d(2.5%, 8px, 0) scale(1.05); } }
+@keyframes drawer-in { from { transform: translateX(32px); opacity: 0; } to { transform: none; opacity: 1; } }
+@keyframes live-pulse { 0% { box-shadow: 0 0 0 0 rgba(47,125,91,.45); } 70% { box-shadow: 0 0 0 8px rgba(47,125,91,0); } 100% { box-shadow: 0 0 0 0 rgba(47,125,91,0); } }
+
+.page-enter { animation: rise .45s var(--ease) both; }
+.card-in {
+  animation-name: rise; animation-duration: .5s; animation-timing-function: var(--ease);
+  animation-fill-mode: backwards; animation-delay: calc(var(--i, 0) * 55ms);
+}
+.card-in:nth-child(2) { --i: 1; } .card-in:nth-child(3) { --i: 2; } .card-in:nth-child(4) { --i: 3; }
+.card-in:nth-child(5) { --i: 4; } .card-in:nth-child(n + 6) { --i: 5; }
+.card-in.banner {
+  animation-name: rise, banner-drift; animation-duration: .5s, 16s;
+  animation-timing-function: var(--ease), ease-in-out; animation-iteration-count: 1, infinite;
+  animation-fill-mode: backwards, none;
+}
+.row-in { animation: fade-in .35s ease-out backwards; }
+.pop-in { animation: pop-in .34s var(--ease) backwards; }
+.menu-in { animation: menu-in .2s var(--ease) backwards; transform-origin: top center; }
+.drawer-fade { animation: fade-in .25s ease-out both; }
+.drawer-slide { animation: drawer-in .32s var(--ease) both; }
+.toast-in { animation: toast-in .4s var(--ease) backwards; }
+.toast-timer { transform-origin: left; animation: toast-timer linear forwards; }
+.live-dot { animation: live-pulse 2s infinite; }
+.btn-primary { position: relative; overflow: hidden; isolation: isolate; }
+.btn-primary::after {
+  content: ""; position: absolute; inset: 0 auto 0 0; width: 35%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,.32), transparent);
+  transform: translateX(-130%) skewX(-20deg); pointer-events: none;
+}
+.btn-primary:hover::after { animation: sheen .85s var(--ease); }
+.flash-soft { animation: fade-in .6s ease-out; }
+
+@media (prefers-reduced-motion: reduce) {
+  .page-enter, .card-in, .pop-in, .menu-in, .toast-in, .drawer-slide { animation-name: fade-in; }
+  .banner, .wash::before, .btn-primary:hover::after, .live-dot { animation: none; }
+}
